@@ -1,0 +1,35 @@
+:root {
+  --hijau-tua: #1f4d3a;
+  --hijau: #2f7d4f;
+  --biru: #2b6cb0;
+  --emas: #d4a017;
+  --emas-muda: #f3d77a;
+  --coklat: #6b4423;
+  --krem: #f7f3e8;
+}
+body { background: var(--krem); color: #2b2b2b; font-family: "Segoe UI", system-ui, sans-serif; }
+a { color: var(--biru); }
+h1, h2, h3, h4, h5 { color: var(--coklat); }
+
+.navbar-kakao { background: var(--hijau-tua); border-bottom: 3px solid var(--emas); }
+.navbar-kakao .navbar-brand, .navbar-kakao .nav-link { color: #fff; }
+.navbar-kakao .nav-link:hover, .navbar-kakao .nav-link.active { color: var(--emas-muda); }
+.navbar-kakao .navbar-toggler { border-color: rgba(255,255,255,.5); }
+.navbar-kakao .navbar-toggler-icon { filter: invert(1); }
+
+.btn-hijau { background: var(--hijau); border-color: var(--hijau); color: #fff; }
+.btn-hijau:hover { background: var(--hijau-tua); border-color: var(--hijau-tua); color: #fff; }
+.btn-emas { background: var(--emas); border-color: var(--emas); color: #2b2b2b; font-weight: 600; }
+.btn-emas:hover { background: var(--emas-muda); border-color: var(--emas-muda); color: #2b2b2b; }
+.btn-biru { background: var(--biru); border-color: var(--biru); color: #fff; }
+.badge-emas { background: var(--emas); color: #2b2b2b; }
+
+.kartu-kakao { border: 1px solid var(--emas-muda); border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(107, 68, 35, .12); }
+.ikon-besar { font-size: 2.5rem; color: var(--hijau); }
+
+.hero-kakao { background: linear-gradient(120deg, var(--hijau-tua), var(--biru));
+  color: #fff; border-radius: 14px; border-bottom: 4px solid var(--emas); }
+.hero-kakao h1 { color: var(--emas-muda); }
+
+.footer-kakao { background: var(--hijau-tua); color: #d8e6dd; border-top: 3px solid var(--emas); }
