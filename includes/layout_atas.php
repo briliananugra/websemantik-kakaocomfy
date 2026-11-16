@@ -47,6 +47,11 @@ if ($role === 'pembeli') {
         <?php endif; ?>
       </ul>
       <ul class="navbar-nav align-items-md-center gap-md-2">
+        <?php if ($role === 'pembeli' && is_file(__DIR__ . '/../pages/pesanan_saya.php')): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= $menu_aktif === 'pesanan' ? 'active' : '' ?>" href="<?= BASE_URL ?>/pages/pesanan_saya.php">Pesanan Saya</a>
+        </li>
+        <?php endif; ?>
         <?php if ($role === 'pembeli' && is_file(__DIR__ . '/../pages/keranjang.php')): ?>
         <li class="nav-item">
           <a class="nav-link" href="<?= BASE_URL ?>/pages/keranjang.php">
