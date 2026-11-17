@@ -1,5 +1,4 @@
 <?php
-// Di localhost aplikasi ada di /kakaocomfy, di InfinityFree di root.
-$isLocal = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1']);
-define('BASE_URL', $isLocal ? '/kakaocomfy' : '');
+// Lokal dan hosting sama-sama di subfolder /kakaocomfy.
+define('BASE_URL', '/kakaocomfy');
 define('APP_NAME', 'Kakao Comfy');
