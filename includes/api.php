@@ -42,3 +42,44 @@ function url_gambar_api(?string $nama): ?string {
     return $skema . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost')
          . BASE_URL . '/uploads/produk/' . rawurlencode($nama);
 }
+
+
+// ---------- Basic Auth khusus pembeli ----------
+// Kalau kredensial dikirim, HANYA itu yang dipakai. Salah = 401. Tidak ada session.
+// 401 = "kamu siapa?", 403 = "kamu dikenal, tapi tidak boleh".
+function api_wajib_pembeli(): array {
+    global $koneksi;
+
+    $user = $_SERVER['PHP_AUTH_USER'] ?? null;
+    $pass = $_SERVER['PHP_AUTH_PW'] ?? null;
+
+    // Cadangan: sebagian server tidak mengisi PHP_AUTH_*, tapi header mentahnya ada
+    if ($user === null) {
+        $hdr = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
+        if (stripos($hdr, 'basic ') === 0) {
+            $dec = base64_decode(substr($hdr, 6), true);
+            if ($dec !== false && strpos($dec, ':') !== false) {
+                [$user, $pass] = explode(':', $dec, 2);
+            }
+        }
+    }
+
+    $u = null;
+    if ($user !== null) {
+        $st = mysqli_prepare($koneksi,
+            "SELECT id_user, password_hash, nama_lengkap, role FROM users WHERE username = ? LIMIT 1");
+        mysqli_stmt_bind_param($st, 's', $user);
+        mysqli_stmt_execute($st);
+        $u = mysqli_fetch_assoc(mysqli_stmt_get_result($st));
+        mysqli_stmt_close($st);
+    }
+
+    if (!$u || !password_verify((string)$pass, $u['password_hash'])) {
+        header('WWW-Authenticate: Basic realm="Kakao Comfy API"');
+        json_error(401, 'Belum login atau kredensial salah. Gunakan Basic Auth.');
+    }
+    if ($u['role'] !== 'pembeli') {
+        json_error(403, 'Hanya akun pembeli yang boleh mengakses endpoint ini.');
+    }
+    return ['id_user' => (int)$u['id_user'], 'nama' => $u['nama_lengkap']];
+}
